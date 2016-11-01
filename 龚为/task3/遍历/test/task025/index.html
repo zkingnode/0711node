@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFE Task 025</title>
+</head>
+<style>
+    .container {
+        width: 400px;
+        border: 2px solid #5C5251;
+        position: relative;
+        top: 50px;
+        left: 50%;
+        margin-left: -200px;
+    }
+
+    .title {
+        padding: 5px 10px;
+        background-color: #fff;
+        position: absolute;
+        top: -20px;
+        left: 35px;
+        font-size: 25px;
+    }
+
+    ul, li {
+        list-style: none;
+        display: block;
+    }
+
+    .title_op {
+        background: url("imgs/minus.png") no-repeat;
+    }
+
+    .title_cl {
+        background: url("imgs/add.png") no-repeat;
+    }
+
+    li span {
+        padding-left: 20px;
+        display: block;
+        width: 100px;
+        cursor: pointer;
+    }
+
+    .tree {
+        margin-top: 30px;
+    }
+
+    .button {
+        margin-top: 30px;
+        text-align: center;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="title">
+        树
+    </div>
+    <div class="button">
+        <input id="text" type="text"><br><br>
+        <input id="search" type="button" value="搜索">
+        <input id="new" type="button" value="新建">
+        <input id="del" type="button" value="删除">
+    </div>
+    <ul class="tree">
+        <li>
+            <span class="title_op">电影</span>
+            <ul>
+                <li>动作片</li>
+                <li>爱情片</li>
+                <li>
+                    <span class="title_op">爱情动作片</span>
+                    <ul>
+                        <li>国产</li>
+                        <li>日韩</li>
+                        <li>欧美</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span class="title_op">电视剧</span>
+            <ul>
+                <li>国产</li>
+                <li>日韩</li>
+                <li>欧美</li>
+            </ul>
+        </li>
+        <li>
+            <span class="title_op">纪录片</span>
+            <ul>
+                <li>国产</li>
+                <li>日韩</li>
+                <li>欧美</li>
+            </ul>
+        </li>
+        <li>
+            <span class="title_op">蛤蛤</span>
+            <ul>
+                <li>姿势</li>
+                <li>华莱士</li>
+                <li>谈笑风生</li>
+                <li>大新闻</li>
+                <li>图样</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+<script>
+    var tree = document.getElementsByClassName("tree")[0];
+    var del = document.getElementById("del");
+    var newtree = document.getElementById("new");
+    var text = document.getElementById("text");
+    var sech = document.getElementById("search");
+
+
+    var state = null; //当前选中
+
+
+    tree.addEventListener("click", on);
+
+
+    //    删除节点
+    del.onclick = function () {
+        if (state == null) {
+            alert("请选择");
+            return;
+        }
+        var par = state.parentElement;
+        if (state.tagName == "SPAN") {
+            par.removeChild(state.nextElementSibling);
+            par.removeChild(state);
+            state = null;
+
+        } else {
+            par.removeChild(state);
+            state = null;
+        }
+
+    };
+
+    //新建
+    newtree.onclick = creat;
+    function creat() {
+        if (state == null) {
+            alert("请选择");
+            return;
+        }
+        if (state.tagName == "SPAN") {
+            var li = document.createElement("li");
+            li.innerHTML = text.value;
+            state.nextElementSibling.appendChild(li)
+        } else {
+            var oldtext = state.innerHTML;
+            var span = document.createElement("span");
+            var ul = document.createElement("ul");
+            var li = document.createElement("li");
+
+            span.innerHTML = oldtext;
+            span.className = "title_op";
+
+            li.innerHTML = text.value;
+
+            ul.appendChild(li);
+            state.parentElement.appendChild(span);
+            span.parentElement.appendChild(ul);
+
+            state.parentElement.removeChild(state);
+            state = null;
+        }
+    }
+
+    //二级收缩
+    function on() {
+        var obj = event.target;
+        var ul = obj.nextElementSibling;
+        color(obj);
+
+        if (event.target.tagName == "SPAN") {
+            if (ul.style.display == "none") {
+                ul.style.display = "block";
+                obj.className = "title_op";
+            } else {
+                ul.style.display = "none";
+                obj.className = "title_cl";
+            }
+        }
+
+    }
+
+    //    选择效果
+    function color(elem) {
+        if (state)state.style.color = "#000";
+        elem.style.color = "red";
+        state = elem;
+    }
+
+    var list = [];
+    var test = tree.children[0];
+    sech.onclick = function () {
+        if (searchState) {
+            for (var i = 0; i < searchState.length; i++) {
+                searchState[i].style.color = "#000";
+            }
+            searchState = []
+        }
+        search(tree);
+    };
+
+    var searchState = [];
+
+    function search(t) {
+        if (t == null) return;
+        var value = text.value.trim();
+        for (var i = 0; i < t.childElementCount; i++) {
+            list.push(t.children[i]);
+
+            if (t.children[i]) {
+                if (t.children[i].innerHTML == value) {
+                    searchState.push(t.children[i]);
+                    t.children[i].style.color = "red"
+                    console.log(searchState);
+                }
+                search(t.children[i]);
+
+            }
+        }
+    }
+</script>
+</body>
+</html>

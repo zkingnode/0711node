@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 021</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            width: 300px;
+            margin: 50px auto;
+        }
+
+        .tag_box div, .hobby_box div {
+            display: inline-block;
+            margin: 10px;
+            padding: 5px;
+            background-color: #33b5e5;
+            color: #5C5251;
+        }
+    </style>
+</head>
+<body>
+<form>
+    Tag：
+    <br>
+    <input id="tag_input" type="text">
+    <br>
+    <div class="tag_box">
+        <div>123</div>
+    </div>
+    <br>
+    <textarea id="hobby_input" cols="30" rows="5"></textarea>
+    <br>
+    <button id="submit">确认</button>
+    <br>
+    <div class="hobby_box">
+        <div>是短发</div>
+    </div>
+</form>
+<div class="box"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

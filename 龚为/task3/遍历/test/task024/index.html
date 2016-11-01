@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFE Task 024</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        div {
+            float: left;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #000;
+            background-color: #fff;
+            color: #000;
+        }
+
+        form {
+            display: inline-block;
+            margin: 20px;
+            position: relative;
+            left: 50%;
+            margin-left: -318px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    Super
+    <div>
+        Cat
+        <div>
+            Apple
+            <div>Pear</div>
+            <div>Pig</div>
+            <div>Cola</div>
+            <div>Soccer</div>
+        </div>
+        <div>Phone</div>
+        <div>
+            <div>Book</div>
+            <div>School</div>
+        </div>
+    </div>
+
+    <div>
+        Note
+        <div>
+            Human
+            <div>Code</div>
+            <div>Operate</div>
+            <div>Man</div>
+        </div>
+        <div>
+            Program
+            <div>
+                Bement
+                <div>Cat</div>
+            </div>
+            <div>Glass</div>
+        </div>
+    </div>
+    <div>Fish</div>
+</div>
+
+<form>
+    <input id="breadth" type="button" value="广度优先">
+    <input id="deep" type="button" value="深度优先">
+    <input id="input" type="text">
+    <input id="bs" type="button" value="非递归广度搜索">
+    <input id="ds" type="button" value="非递归深度搜索">
+    <br>
+    <br>
+    <input id="del" type="button" value="删除节点">
+    <input id="newValue" type="text">
+    <input id="new" type="button" value="新建节点">
+</form>
+
+<script>
+    var container = document.getElementsByClassName("container")[0];
+    var form = document.getElementsByTagName("form")[0];
+    var list = [];
+    var input = document.getElementById("input");
+    var input_value = null;
+    var ad = null;
+    var newValue = document.getElementById("newValue");
+
+    console.log(form);
+
+
+    form.addEventListener("click", function () {
+        switch (event.target.id) {
+            case "breadth":
+                if (window.timer)return;
+                reset();
+                breadth(container);
+                color();
+                break;
+            case "deep":
+                if (window.timer)return;
+                reset();
+                deep(container);
+                color();
+                break;
+            case "bs":
+                if (window.timer)return;
+                reset();
+                breadth(container);
+                search();
+                color();
+                break;
+            case "ds":
+                if (window.timer)return;
+                reset();
+                deep(container);
+                search();
+                color();
+                break;
+            case "del":
+                del();
+                break;
+            case "new":
+                newcreat();
+                break;
+        }
+    });
+
+    container.addEventListener("click", xuanze);
+
+    var log = null;
+    function xuanze() {
+        if (log) {
+            log.style.backgroundColor = "#fff";
+        }
+        if (log == event.target) {
+            log.style.backgroundColor = "#fff";
+            log = null;
+            return;
+        }
+        log = event.target;
+        log.style.backgroundColor = "red";
+    }
+
+
+    function del() {
+        var par = log.parentElement;
+        par.removeChild(log)
+    }
+
+
+    function newcreat() {
+        if (log == null) {
+            alert("请选择节点");
+            return;
+        }
+        var div = document.createElement("div");
+        div.innerHTML = newValue.value;
+        log.appendChild(div)
+    }
+
+    //广度优先
+    function breadth(elem) {
+        if (elem == null) return;
+        for (var i = 0; i < elem.childElementCount; i++) {
+            list.push(elem.children[i]);
+        }
+        for (i = 0; i < list.length; i++) {
+            if (list[i].childElementCount) {
+                for (var j = 0; j < list[i].childElementCount; j++) {
+                    list.push(list[i].children[j])
+                }
+            }
+        }
+    }
+
+    //    广度优先
+    function deep(elem) {
+        if (elem == null) return;
+        for (var i = 0; i < elem.childElementCount; i++) {
+            list.push(elem.children[i]);
+            if (elem.children[i]) {
+                deep(elem.children[i])
+            }
+        }
+    }
+
+
+    function search() {
+        input_value = input.value.trim();
+        var i = 0;
+        while (1) {
+            if (list[i].innerHTML.trim() == input_value) {
+                ad = i;
+                return;
+            }
+            i++;
+        }
+    }
+
+
+    //    修改背景
+    function color() {
+        var i = 0;
+
+        if (log) {
+            log.style.backgroundColor = "#fff";
+        }
+        if (ad)list[ad].style.backgroundColor = "#fff";
+        window.timer = window.setInterval(function () {
+
+            if (list[i]) {
+                list[i].style.backgroundColor = "red";
+            }
+            if (list[i - 1] && ad != i - 1) {
+                list[i - 1].style.backgroundColor = "#fff";
+            }
+            i++;
+            if (i > list.length) {
+                window.clearInterval(window.timer);
+                window.timer = null;
+            }
+        }, 500);
+
+    }
+
+
+    function reset() {
+        list = [];
+        window.clearInterval(window.timer);
+        input_value = null;
+    }
+</script>
+
+</body>
+</html>

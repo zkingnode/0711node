@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+</head>
+<body>
+
+<h3>污染城市列表</h3>
+<ul id="aqi-list">
+    <!--
+        <li>第一名：福州（样例），10</li>
+          <li>第二名：福州（样例），10</li> -->
+</ul>
+
+<script type="text/javascript">
+
+    var aqiData = [
+        ["北京", 90],
+        ["上海", 50],
+        ["福州", 10],
+        ["广州", 50],
+        ["成都", 90],
+        ["西安", 100]
+    ];
+
+    (function () {
+
+        /*
+         在注释下方编写代码
+         遍历读取aqiData中各个城市的数据
+         将空气质量指数大于60的城市显示到aqi-list的列表中
+         */
+
+//        希望比较数字而非字符串，比较函数可以简单的以 d2 减 d1，如下的函数将会将数组降序排列
+        aqiData = aqiData.sort(function (d1, d2) {
+            return d2[1] - d1[1];
+        });
+
+//      中文数字数组
+        var ch_num = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+
+//       获得数组长度
+        var len = aqiData.length;
+
+//        遍历数组找
+        for (var i = 0; i < len; i++) {
+//            找出符合条件的城市
+            if (aqiData[i][1] >= 60) {
+//                创建HTML元素
+                var li = document.createElement("li");
+//                创建文本节点
+                var text = document.createTextNode("第" + ch_num[i] + "名：" + aqiData[i]);
+//                将文本节点添加到元素内
+                li.appendChild(text);
+//                将HTML元素添加到指定元素内
+                document.getElementById("aqi-list").appendChild(li);
+            }
+        }
+
+    })();
+
+</script>
+</body>
+</html>

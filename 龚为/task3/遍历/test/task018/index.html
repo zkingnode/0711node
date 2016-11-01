@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 018</title>
+    <style>
+        .box div {
+            height: 30px;
+            float: left;
+            margin: 10px;
+            padding: 5px;
+            color: #fff;
+            background-color: #f00;
+            line-height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<form class="form">
+    <input id="input" type="text" title="in">
+    <input id="left_input" type="button" value="左侧入">
+    <input id="right_input" type="button" value="右侧入">
+    &nbsp;&nbsp;
+    <input id="left_out" type="button" value="左侧出">
+    <input id="right_out" type="button" value="右侧出">
+</form>
+<div class="box">
+</div>
+<script>
+    var form = document.getElementsByClassName("form")[0];
+    var box = document.getElementsByClassName("box")[0];
+
+    box.addEventListener("click", dlt);
+    form.addEventListener("click", ck);
+
+    //    点击Div删除
+    function dlt() {
+        box.removeChild(event.target);
+    }
+
+
+    //    按钮点击函数
+    function ck() {
+        var box = document.getElementsByClassName("box")[0];
+        var who = event.target.id;
+        var input_txt = document.getElementById("input").value;
+        if (who === "input")return;
+        if (isNaN(input_txt)) {
+            alert("请输入正确的数字！");
+            return;
+        }
+        switch (who) {
+            case "left_input" :
+                console.log("左侧入");
+                if (!box.childElementCount) {
+                    box.appendChild(newtext(input_txt));
+                } else {
+                    box.insertBefore(newtext(input_txt), box.firstChild);
+                }
+                break;
+
+            case "right_input" :
+                box.appendChild(newtext(input_txt));
+                break;
+
+            case "left_out" :
+                if (!box.childElementCount) {
+                    alert("没有了");
+                    return
+                }
+                var num = box.firstChild.innerHTML;
+                alert(num);
+                box.removeChild(box.firstChild);
+                break;
+
+            case "right_out" :
+                if (!box.childElementCount) {
+                    alert("没有了");
+                    return
+                }
+                var num = box.lastChild.innerHTML;
+                alert(num);
+                box.removeChild(box.lastChild);
+                break;
+            default:
+                return;
+        }
+    }
+
+    //    内容生成
+    function newtext(num) {
+        var div = document.createElement("div");
+        div.innerHTML = num;
+        return div;
+    }
+</script>
+</body>
+</html>
