@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.center {
+    width: 400px;
+    height: 200px;
+    background-color: #ccc;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin: auto;
+}
+.center div {
+    width: 0;
+    height: 0;
+    border:25px solid yellow;
+}
+.top {
+    border-bottom-right-radius: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.bottom {
+    border-top-left-radius: 50px;
+    position: absolute;
+    top: 200px;
+    left: 400px;
+    margin: -50px 0 0 -50px;
+}

@@ -1,0 +1,14 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+.index {
+    width: 980px;
+    height: 1386px;
+}
+header {
+    width: 892px;
+    height: 61px;
+    border-bottom: 2px solid #938e8c;
+
+}

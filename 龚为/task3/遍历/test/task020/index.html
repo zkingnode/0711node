@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 020</title>
+    <style>
+        .box div {
+            height: 30px;
+            float: left;
+            margin: 10px;
+            padding: 5px;
+            color: #fff;
+            background-color: #f00;
+            line-height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<form class="form">
+    <textarea id="input" cols="30" rows="10"></textarea>
+    <input id="left_input" type="button" value="左侧入">
+    <input id="right_input" type="button" value="右侧入">
+    &nbsp;&nbsp;
+    <input id="left_out" type="button" value="左侧出">
+    <input id="right_out" type="button" value="右侧出">
+    &nbsp;
+    <input type="text" id="google">
+    <input type="button" id="goo" value="搜索">
+</form>
+<div class="box"></div>
+<script>
+    var form = document.getElementsByClassName("form")[0];
+    var box = document.getElementsByClassName("box")[0];
+    var google = document.getElementById("google");
+
+    box.addEventListener("click", dlt);
+    form.addEventListener("click", ck);
+
+    //    点击Div删除
+    function dlt() {
+        box.removeChild(event.target);
+    }
+
+
+    //    按钮点击函数
+    function ck() {
+        var box = document.getElementsByClassName("box")[0];
+        var who = event.target.id;
+        var input_txt = document.getElementById("input").value;
+        var reg = /([ |，|,|、|\t|\n])+/g;
+
+        if (who === "input")return;
+        if (input_txt == "") {
+            alert("请输入内容");
+            return
+        }
+
+//        输入处理
+//        找到字符串中的分隔符
+        var split = input_txt.match(reg);
+        if (split == null) {
+            newtext(input_txt);
+        } else {
+            for (var i = 0, len = split.length; i < len; i++) {
+                input_txt = input_txt.replace(split[i], ",");
+            }
+            input_txt = input_txt.split(",");
+            for (i = 0; i < input_txt.length; i++) {
+                newtext(input_txt[i])
+            }
+        }
+        console.log(input_txt);
+//        事件分配
+        switch (who) {
+            case "left_input" :
+//                判断有无子元素，选择插入位置
+                if (!box.childElementCount) {
+                    box.appendChild(newtext(input_txt[0]));
+                    for (i = 1; i < input_txt.length; i++) {
+                        box.insertBefore(newtext(input_txt[i]), box.firstChild);
+                    }
+                } else {
+                    for (i = 0; i < input_txt.length; i++) {
+                        box.insertBefore(newtext(input_txt[i]), box.firstChild);
+                    }
+                }
+                break;
+
+            case "right_input" :
+                box.appendChild(newtext(input_txt));
+                break;
+
+            case "left_out" :
+                if (!box.childElementCount) {
+                    alert("没有了");
+                    return
+                }
+                var num = box.firstChild.textContent;
+                alert(num);
+                box.removeChild(box.firstElementChild);
+                break;
+
+            case "right_out" :
+                if (!box.childElementCount) {
+                    alert("没有了");
+                    return
+                }
+                var num = box.lastChild.textContent;
+                alert(num);
+                box.removeChild(box.firstElementChild);
+                break;
+            case  "goo":
+
+                box.innerHTML = box.innerHTML.replace(google.value, "<span style='color: blue'>" + google.value + "</span>");
+
+                break;
+            default:
+                return;
+        }
+    }
+
+    //    内容生成
+    function newtext(num) {
+        var div = document.createElement("div");
+        div.innerHTML = num;
+        return div;
+    }
+</script>
+</body>
+</html>

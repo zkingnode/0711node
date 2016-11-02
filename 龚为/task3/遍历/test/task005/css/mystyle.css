@@ -1,0 +1,196 @@
+* {
+    margin:0;
+    padding:0;
+}
+body {
+  background-color: #dedede;
+    font-family: "微软雅黑";
+    min-width: 920px;
+}
+/*
+*顶部样式
+*/
+header {
+    width:100%;
+    height:60px;
+    color: #fff;
+    background-color: #333333;
+    position: relative;
+}
+header a,footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#logo {
+    font-size: 28px;
+    font-weight: 700;
+    position: absolute;
+    top:10px;
+    left: 20px;
+}
+
+nav ul {
+    list-style: none;
+    position: absolute;
+    top:50%;
+    right:20px;
+}
+
+nav ul li {
+    float: left;
+    margin-left: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/*
+*主体部分样式
+*/
+article {
+    margin:26px 20px;
+    padding:25px 35px;
+    border:1px solid #CDCDCD;
+    background-color: #fff;
+    box-shadow: 3px 3px 2px #848484;
+    overflow: hidden;
+}
+
+.auther,h2,h3 {
+    margin: 16px 0;
+}
+
+.auther,h3 {
+    color: #606467;
+}
+.auther {
+    font-size: 13px;
+}
+article p {
+    text-indent: 2em;
+}
+
+
+/*
+*图片
+*/
+.photo {
+    overflow: hidden;
+}
+figure {
+    font-size: 13px;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    margin: 30px;
+    padding: 5px 0;
+    border: 1px solid #dedede;
+    float: left;
+
+}
+
+figure img {
+    width:120px;
+    height:120px;
+}
+
+/*
+*最后一篇文章
+*/
+article ol {
+    margin-left: 2em;
+}
+.table {
+    font-size: 13px;
+    margin:20px 0;
+}
+.table table {
+    border-collapse:collapse;
+    border:1px solid #dedede;
+    width:100%;
+}
+.table table tr {
+    border:1px solid #dedede;
+    line-height:20px;
+}
+.table table tr:first-child {
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #000;
+    color: #fff;
+}
+.table table tr:last-child {
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #dedede;
+    color: #000;
+}
+
+/*
+*注册
+*/
+.login {
+    width:300px;
+    margin:26px auto;
+    padding:25px 35px;
+    border:1px solid #CDCDCD;
+    background-color: #fff;
+    box-shadow: 3px 3px 2px #848484;
+}
+
+.login h4 {
+    padding-left: 15px;
+    border-left: 3px solid #ccc;
+    height:40px;
+    line-height: 40px;
+    margin-bottom: 20px;
+}
+.login form div {
+    font-size: 13px;
+    margin:15px 0;
+}
+.login form div p{
+    margin-left: 40%;
+    margin-top: 10px;
+    color: #ccc;
+}
+.tips {
+    float: left;
+    text-align: right;
+    width: 40%;
+}
+#button {
+    width:100%;
+    height:40px;
+    color: #fff;
+    border:none;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 15px;
+    background-color: #3355D0;
+}
+footer {
+    width:100%;
+    height:60px;
+    background-color: #000;
+    text-align: center;
+    color: #fff;
+}
+footer p {
+    line-height: 60px;
+}
+
+
+.index {
+    overflow: hidden;
+    padding-right: 400px;
+}
+main {
+    float: left;
+}
+.right {
+    float: right;
+    margin-left: -100%;
+    position: relative;
+    left:380px;
+}

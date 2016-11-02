@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 019</title>
+    <style>
+
+        .box {
+            display: flex;
+            align-items: flex-end;
+            margin: 5px auto;
+            height: 625px;
+        }
+
+        .box div {
+            width: 16px;
+            margin: 3px;
+            color: #5C5251;
+            text-align: center;
+            background-color: #ff1450;
+            box-shadow: 3px 3px 3px #c9c9c9;
+            border-radius: 3px;
+        }
+
+        .box span {
+            display: block;
+            margin-top: -20px;
+        }
+
+    </style>
+</head>
+<body>
+<form class="form">
+    <input id="rand" type="button" value="生成数据">
+    &nbsp;
+    &nbsp;
+    <input type="text" name="" id="time" placeholder="排序速度 ms">
+    <input id="pop" type="button" value="冒泡">
+    <br>
+    比较次数：<span></span>
+</form>
+<div class="box">
+</div>
+<script>
+    var form = document.getElementsByClassName("form")[0];
+    var box = document.getElementsByClassName("box")[0];
+    var time = document.getElementById("time");
+
+
+    box.addEventListener("click", dlt);
+    form.addEventListener("click", ck);
+
+    //    点击Div删除
+    function dlt() {
+        if (box.childElementCount) {
+            box.removeChild(event.target);
+        }
+    }
+
+
+    //    按钮点击函数
+    function ck() {
+        var box = document.getElementsByClassName("box")[0];
+        var who = event.target.id;
+        var input_txt = document.getElementById("input").value;
+        if (event.target.id == "left_input" || event.target.id == "right_input") {
+
+            if (who === "input")return;
+            if (isNaN(input_txt)) {
+                alert("请输入正确的数字！");
+                return;
+            }
+            if (Number(input_txt) > 100 || Number(input_txt) < 10) {
+                alert("只能输入10-100的数字哦");
+                return;
+            }
+        }
+
+        switch (who) {
+            case "left_input" :
+                if (box.childElementCount >= 60) {
+                    alert("不能再多了！！！");
+                    return;
+                }
+                if (!box.childElementCount) {
+                    box.appendChild(newtext(input_txt));
+                } else {
+                    box.insertBefore(newtext(input_txt), box.firstChild);
+                }
+                break;
+
+            case "right_input" :
+                if (box.childElementCount >= 60) {
+                    alert("不能再多了！！！");
+                    return;
+                }
+                box.appendChild(newtext(input_txt));
+                break;
+
+            case "left_out" :
+                if (!box.childElementCount) {
+                    alert("没有了");
+                    return
+                }
+                var num = box.firstChild.innerHTML;
+                alert(num);
+                box.removeChild(box.firstChild);
+                break;
+
+            case "right_out" :
+                if (!box.childElementCount) {
+                    alert("没有了");
+                    return
+                }
+                var num = box.lastChild.innerHTML;
+                alert(num);
+                box.removeChild(box.lastChild);
+                break;
+            default:
+                time.value = "";
+                return;
+        }
+    }
+
+    //    内容生成
+    function newtext(num) {
+        var div = document.createElement("div");
+        div.innerHTML = "<span>" + num + "</span>";
+        var attribute = document.createAttribute("style");
+        attribute.nodeValue = "height:" + (num * 6) + "px";
+        div.setAttributeNode(attribute);
+        return div;
+    }
+
+    //生成随机数据
+    var rand_btn = document.getElementById("rand");
+    rand_btn.onclick = rand;
+
+    function rand() {
+        window.clearInterval(window.timer);
+        box.innerHTML = "";
+        var num;
+        for (var i = 0; i < 60; i++) {
+            num = Math.floor(Math.random() * (99 - 10 + 1) + 10);    //生成10-100随机整数
+            box.appendChild(newtext(num))
+        }
+    }
+
+    //冒泡排序
+    var pop_btn = document.getElementById("pop");
+    pop_btn.onclick = pop;
+    function pop() {
+        window.clearInterval(window.timer);
+        var arry = box.childNodes;
+        var cent;
+        var i = 0;
+        var j = 0;
+        var count = 0;
+        var t = Number(time.value);
+        window.timer = window.setInterval(run, t);
+
+        function run() {
+            if (i < arry.length - 1) {
+                if (j < arry.length - 1 - i) {
+
+                    if (Number(arry[j].firstChild.innerHTML) > Number(arry[j + 1].firstChild.innerHTML)) {
+                        cent = Number(arry[j + 1].firstChild.innerHTML);
+                        arry[j].style.background = "green";
+
+
+                        arry[j + 1].firstChild.innerHTML = arry[j].firstChild.innerHTML;
+                        arry[j + 1].style.height = Number(arry[j].firstChild.innerHTML) * 6 + "px";
+                        arry[j + 1].style.background = "green";
+
+                        arry[j].style.background = "#ff1450";
+                        arry[j].firstChild.innerHTML = cent;
+
+                        arry[j].style.background = "#ff1450";
+
+
+                        arry[j].style.height = cent * 6 + "px";
+                        count++;
+                        document.getElementsByTagName("span")[0].innerHTML = count;
+
+                    } else {
+                        arry[j + 1].style.background = "green";
+                        arry[j].style.background = "#ff1450";
+                    }
+                    j++;
+                    return;
+                } else {
+                    j = 0;
+                }
+                i++;
+            } else {
+                window.clearInterval(timer);
+            }
+        }
+    }
+</script>
+</body>
+</html>

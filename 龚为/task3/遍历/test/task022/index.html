@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 022</title>
+    <style>
+        #container {
+            width: 830px;
+            height: 300px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        div {
+            border: 2px solid #5C5251;
+            background-color: #fff;
+        }
+
+        .big {
+            width: 350px;
+            height: 240px;
+            float: left;
+            margin: 30px 30px;
+        }
+
+        .center {
+            width: 120px;
+            height: 200px;
+            float: left;
+            margin: 20px 25px;
+        }
+
+        .small {
+            width: 35px;
+            height: 160px;
+            float: left;
+            margin: 20px 10px;
+        }
+
+        form {
+            width: 145px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="big" id="big_1">
+        <div class="center" id="center_1">
+            <div class="small" id="small_1"></div>
+            <div class="small" id="small_2"></div>
+        </div>
+
+        <div class="center" id="center_2">
+            <div class="small" id="small_3"></div>
+            <div class="small" id="small_4"></div>
+        </div>
+    </div>
+
+    <div class="big" id="big_2">
+        <div class="center" id="center_3">
+            <div class="small" id="small_5"></div>
+            <div class="small" id="small_6"></div>
+        </div>
+
+        <div class="center" id="center_4">
+            <div class="small" id="small_7"></div>
+            <div class="small" id="small_8"></div>
+        </div>
+    </div>
+</div>
+
+<form action="">
+    <input type="button" value="前序">
+    <input type="button" value="中序">
+    <input type="button" value="后序">
+</form>
+
+<script>
+    var container = document.getElementById("container");
+    var list = [];
+    var form = document.getElementsByTagName("form")[0];
+
+    form.addEventListener("click", function () {
+        switch (event.target.value) {
+            case "前序":
+                list = [];
+                pre_order(container);
+                color();
+                break;
+            case "中序":
+                list = [];
+                in_order(container);
+                color();
+                break;
+            case "后序":
+                list = [];
+                post_order(container);
+                color();
+                break;
+        }
+    });
+
+
+    //    前序遍历
+    function pre_order(elem) {
+        if (!(elem == null)) {
+            list.push(elem);
+            pre_order(elem.firstElementChild);
+            pre_order(elem.lastElementChild);
+        }
+    }
+
+    //中序遍历
+    function in_order(elem) {
+        if (!(elem == null)) {
+            in_order(elem.firstElementChild);
+            list.push(elem);
+            in_order(elem.lastElementChild);
+        }
+    }
+
+    //    后续遍历
+    function post_order(elem) {
+        if (!(elem == null)) {
+            post_order(elem.firstElementChild);
+            post_order(elem.lastElementChild);
+            list.push(elem);
+        }
+    }
+
+    //    修改背景
+    function color() {
+        var i = 0;
+        list[i].style.backgroundColor = "#fff";
+        window.setInterval(function () {
+            if (list[i]) {
+                list[i].style.backgroundColor = "red";
+            } else {
+                list[i - 1].style.backgroundColor = "#fff";
+                return;
+            }
+            if (list[i - 1]) {
+                list[i - 1].style.backgroundColor = "#fff";
+            }
+            i++;
+        }, 500)
+    }
+</script>
+</body>
+</html>
